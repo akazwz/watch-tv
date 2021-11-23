@@ -7,28 +7,28 @@ export interface SourceProps {
 }
 
 const Player = (props: { url: string | string[] | SourceProps[] | MediaStream }) => {
-  const {url} = props
+  const { url } = props
   const [playing, setPlaying] = useState<boolean>(true)
   const [loop, setLoop] = useState<boolean>(true)
-  const [controls, setControls] = useState<boolean>(true)
+  const [controls, setControls] = useState<boolean>(false)
   const [light, setLight] = useState<boolean | string>(true)
   const [volume, setVolume] = useState<number>(0.6)
   const [muted, setMuted] = useState<boolean>(false)
   const [playbackRate, setPlaybackRate] = useState<number>(1)
   const [width, setWidth] = useState<string>('100%')
   const [height, setHeight] = useState<string>('100%')
-  const [style, setStyle] = useState<CSSProperties>({minHeight: '300px'})
+  const [style, setStyle] = useState<CSSProperties>({ minHeight: '300px' })
   const [progressInterval, setProgressInterval] = useState<number>(1000)
   const [playsinline, setPlaysinline] = useState<boolean>(false)
   const [pip, setPip] = useState<boolean>(false)
   const [stopOnUnmount, setStopOnUnmount] = useState<boolean>(false)
-  const [fallback, setFallBack] = useState<ReactElement>(<div/>)
+  const [fallback, setFallBack] = useState<ReactElement>(<div />)
   const [wrapper, setWrapper] = useState<any>()
   const [playIcon, setPlayIcon] = useState<ReactElement>()
   const [previewTabIndex, setPreviewTabIndex] = useState<number>(0)
   const [config, setConfig] = useState<Config>({})
 
-  useEffect(()=>{
+  useEffect(() => {
     if (typeof url === 'string') {
       if (!ReactPlayer.canPlay(url)) {
         alert('can not play this')

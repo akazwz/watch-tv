@@ -8,7 +8,7 @@ const HomePage = () => {
   )
 
   const handleChangeUrl = () => {
-    setUrl('http://39.134.39.39/PLTV/88888888/224/3221226257/index.m3u8')
+    setUrl('http://ott-cdn.ucom.am/s27/index.m3u8')
   }
 
   return (
@@ -16,13 +16,13 @@ const HomePage = () => {
       <CssBaseline />
       <Container maxWidth="sm" style={{height: '360px'}}>
         <Player url={url} />
+        <Button
+          variant="contained"
+          onClick={handleChangeUrl}
+        >
+          CHANGE
+        </Button>
       </Container>
-      <Button
-        variant="contained"
-        onClick={handleChangeUrl}
-      >
-        CHANGE
-      </Button>
     </>
   )
 }
