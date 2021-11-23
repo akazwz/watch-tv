@@ -1,15 +1,13 @@
 import ReactPlayer, { Config } from 'react-player'
 import { CSSProperties, ReactElement, useEffect, useState } from 'react'
 
-interface SourceProps {
+export interface SourceProps {
   src: string
   type: string
 }
 
-const Player = () => {
-  const [url, setUrl] = useState<string | string[] | SourceProps[] | MediaStream>(
-    'https://live-k2301-kbp.1plus1.video/sport/smil:sport.smil/playlist.m3u8'
-  )
+const Player = (props: { url: string | string[] | SourceProps[] | MediaStream }) => {
+  const {url} = props
   const [playing, setPlaying] = useState<boolean>(true)
   const [loop, setLoop] = useState<boolean>(true)
   const [controls, setControls] = useState<boolean>(true)
@@ -17,9 +15,9 @@ const Player = () => {
   const [volume, setVolume] = useState<number>(0.6)
   const [muted, setMuted] = useState<boolean>(false)
   const [playbackRate, setPlaybackRate] = useState<number>(1)
-  const [width, setWidth] = useState<string>('640px')
-  const [height, setHeight] = useState<string>('360px')
-  const [style, setStyle] = useState<CSSProperties>({})
+  const [width, setWidth] = useState<string>('100%')
+  const [height, setHeight] = useState<string>('100%')
+  const [style, setStyle] = useState<CSSProperties>({minHeight: '300px'})
   const [progressInterval, setProgressInterval] = useState<number>(1000)
   const [playsinline, setPlaysinline] = useState<boolean>(false)
   const [pip, setPip] = useState<boolean>(false)
@@ -74,9 +72,6 @@ const Player = () => {
   const handlePlayerSeek = (seconds: number) => {
   }
 
-  const handlePlayerPlaybackRateChange = () => {
-  }
-
   const handlePlayerEnded = () => {
   }
 
@@ -124,7 +119,6 @@ const Player = () => {
         onBuffer={handlePlayerBuffer}
         onBufferEnd={handlePlayerBufferEnd}
         onSeek={handlePlayerSeek}
-        onPlaybackRateChange={handlePlayerPlaybackRateChange}
         onEnded={handlePlayerEnded}
         onError={handlePlayerError}
         onClickPreview={handlePlayerClickPreview}
