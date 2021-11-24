@@ -23,7 +23,7 @@ const HomePage = () => {
     'https://amc-ifc-films-picks-1.imdbtv.wurl.com/manifest/playlist.m3u8'
   )
 
-  const [categories, setCategories] = useState<string[]>([])
+  const [categories, setCategories] = useState<any[]>([])
 
   useEffect(() => {
     getChannels().then((res: AxiosResponse) => {
@@ -36,27 +36,35 @@ const HomePage = () => {
         return item
       })
 
-      let categories: string[] = []
+      let categoriesM = new Map()
 
       for (let i = 0; i < channels.length; i++) {
         let channel: Channel = channels[i]
-        const cate = channel.category
-        if (categories.indexOf(cate as string) > -1) {
-        } else {
-          if (cate != null) {categories.push(cate)}
+        let cate = channel.category
+        if (!cate) {
+          cate = 'none'
         }
+
+        const isContained = categoriesM.has(cate)
+
+        if (!isContained) {
+          categoriesM.set(cate, [channel])
+        } else {
+          categoriesM.set(cate, [...categoriesM.get(cate), channel])
+        }
+        let cates = Array.from(categoriesM.keys())
+        setCategories(cates)
       }
-      setCategories(categories)
     })
   })
 
   return (
     <>
       <CssBaseline />
-      <Container maxWidth="sm" style={{ height: '360px' }}>
+      <Container maxWidth="lg" sx={{ height: '360px' }}>
         <Player url={url} />
-        {categories.map((cate) => {
-          return cate.concat(' ')
+        {categories.map((item) => {
+          return item.concat(' ')
         })}
       </Container>
     </>
