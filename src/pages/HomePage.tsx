@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Box, Button, Container, CssBaseline, Radio } from '@mui/material'
 import { getChannels } from '../api/channels'
 import { AxiosResponse } from 'axios'
+import ChannelsCate from '../components/ChannelsCate'
 
 export type Channel = {
   category: string | null
@@ -23,8 +24,8 @@ const HomePage = () => {
     'https://amc-ifc-films-picks-1.imdbtv.wurl.com/manifest/playlist.m3u8'
   )
   const [categories, setCategories] = useState<string[]>([''])
-  const [cateChan, setCateChan] = useState<Map<any, any>>()
-  const [langChan, setLangChan] = useState<Map<any, any>>()
+  const [cateChan, setCateChan] = useState<Map<any, any>>(new Map())
+  const [langChan, setLangChan] = useState<Map<any, any>>(new Map())
 
   useEffect(() => {
     let initCategories: string[] = []
@@ -64,11 +65,18 @@ const HomePage = () => {
   return (
     <>
       <CssBaseline />
-      <Container maxWidth="lg" sx={{ height: '360px' }}>
+      <Container
+        maxWidth="lg"
+        sx={{
+          height: '360px',
+          display: 'flex',
+          alignContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column'
+        }}
+      >
         <Player url={url} />
-        <>
-
-        </>
+        <ChannelsCate cateChan={cateChan} setUrl={setUrl}/>
       </Container>
     </>
   )
