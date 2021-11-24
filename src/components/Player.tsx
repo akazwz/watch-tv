@@ -37,9 +37,17 @@ const Player = (props: { url: string | string[] | SourceProps[] | MediaStream })
   })
 
   const handlePlayerReady = (player: ReactPlayer) => {
+    setTimeout(() => {
+      console.log('ready')
+      setMuted(false)
+    }, 1000)
   }
 
   const handlePlayerStart = () => {
+    setTimeout(() => {
+      console.log('start')
+      setPlaying(true)
+    }, 1000)
   }
 
   const handlePlayerPlay = () => {
@@ -51,10 +59,6 @@ const Player = (props: { url: string | string[] | SourceProps[] | MediaStream })
     loaded: number
     loadedSeconds: number
   }) => {
-    console.log(state.played)
-    console.log(state.playedSeconds)
-    console.log(state.loaded)
-    console.log(state.loadedSeconds)
   }
 
   const handlePlayerDuration = (duration: number) => {

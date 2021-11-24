@@ -1,6 +1,6 @@
 import Player, { SourceProps } from '../components/Player'
 import { useEffect, useState } from 'react'
-import { Button, Container, CssBaseline } from '@mui/material'
+import { Box, Button, Container, CssBaseline, Radio } from '@mui/material'
 import { getChannels } from '../api/channels'
 import { AxiosResponse } from 'axios'
 
@@ -22,10 +22,12 @@ const HomePage = () => {
   const [url, setUrl] = useState<string | string[] | SourceProps[] | MediaStream>(
     'https://amc-ifc-films-picks-1.imdbtv.wurl.com/manifest/playlist.m3u8'
   )
-
-  const [categories, setCategories] = useState<any[]>([])
+  const [categories, setCategories] = useState<string[]>([''])
+  const [cateChan, setCateChan] = useState<Map<any, any>>()
+  const [langChan, setLangChan] = useState<Map<any, any>>()
 
   useEffect(() => {
+    let initCategories: string[] = []
     getChannels().then((res: AxiosResponse) => {
       if (res.status !== 200) {
         alert('error')
@@ -52,20 +54,21 @@ const HomePage = () => {
         } else {
           categoriesM.set(cate, [...categoriesM.get(cate), channel])
         }
-        let cates = Array.from(categoriesM.keys())
-        setCategories(cates)
       }
+      setCateChan(categoriesM)
+      initCategories = Array.from(categoriesM.keys())
+      setCategories(initCategories)
     })
-  })
+  }, [])
 
   return (
     <>
       <CssBaseline />
       <Container maxWidth="lg" sx={{ height: '360px' }}>
         <Player url={url} />
-        {categories.map((item) => {
-          return item.concat(' ')
-        })}
+        <>
+
+        </>
       </Container>
     </>
   )
