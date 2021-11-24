@@ -8,6 +8,7 @@ import Collapse from '@mui/material/Collapse'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
 import ScienceIcon from '@mui/icons-material/Science'
 import DoDisturbAltIcon from '@mui/icons-material/DoDisturbAlt'
+import PetsIcon from '@mui/icons-material/Pets'
 import MusicVideoIcon from '@mui/icons-material/MusicVideo'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
@@ -17,34 +18,15 @@ import { Channel } from '../pages/HomePage'
 const ChannelsCate = (props: { cateChan: Map<any, any>, setUrl: any, setChannelName: any }) => {
   const { cateChan, setUrl, setChannelName } = props
   console.log(cateChan)
-  const [openXXX, setOpenXXX] = useState<boolean>(false)
   const [openScience, setOpenScience] = useState<boolean>(false)
+  const [openAnimation, setOpenAnimation] = useState<boolean>(false)
+  const [openXXX, setOpenXXX] = useState<boolean>(false)
+
   const [ScienceChan, setScienceChan] = useState<ReactElement>(<></>)
+  const [AnimationChan, setAnimationChan] = useState<ReactElement>(<></>)
   const [XXXChan, setXXXChan] = useState<ReactElement>(<></>)
 
   useEffect(() => {
-    if (cateChan.get('XXX')) {
-      const channels = cateChan.get('XXX').slice(0, 1000)
-      if (channels) {
-        const element = channels.map((item: Channel) => {
-          return (
-            <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }} onClick={() => {
-                setUrl(item.url)
-                setChannelName(item.name)
-              }}>
-                <ListItemIcon>
-                  <StarBorder />
-                </ListItemIcon>
-                <ListItemText primary={item.name} />
-              </ListItemButton>
-            </List>
-          )
-        })
-        setXXXChan(element)
-      }
-    }
-
     if (cateChan.get('Science')) {
       const channels = cateChan.get('Science').slice(0, 1000)
       if (channels) {
@@ -54,6 +36,8 @@ const ChannelsCate = (props: { cateChan: Map<any, any>, setUrl: any, setChannelN
               <ListItemButton sx={{ pl: 4 }} onClick={() => {
                 setUrl(item.url)
                 setChannelName(item.name)
+                setOpenAnimation(false)
+                setOpenXXX(false)
               }}>
                 <ListItemIcon>
                   <StarBorder />
@@ -67,7 +51,54 @@ const ChannelsCate = (props: { cateChan: Map<any, any>, setUrl: any, setChannelN
       }
     }
 
-  }, [cateChan, setUrl])
+    if (cateChan.get('Animation')) {
+      const channels = cateChan.get('Animation').slice(0, 1000)
+      if (channels) {
+        const element = channels.map((item: Channel) => {
+          return (
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 4 }} onClick={() => {
+                setUrl(item.url)
+                setChannelName(item.name)
+                setOpenXXX(false)
+                setOpenScience(false)
+              }}>
+                <ListItemIcon>
+                  <StarBorder />
+                </ListItemIcon>
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            </List>
+          )
+        })
+        setAnimationChan(element)
+      }
+    }
+
+    if (cateChan.get('XXX')) {
+      const channels = cateChan.get('XXX').slice(0, 1000)
+      if (channels) {
+        const element = channels.map((item: Channel) => {
+          return (
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 4 }} onClick={() => {
+                setUrl(item.url)
+                setChannelName(item.name)
+                setOpenScience(false)
+                setOpenAnimation(false)
+              }}>
+                <ListItemIcon>
+                  <StarBorder />
+                </ListItemIcon>
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            </List>
+          )
+        })
+        setXXXChan(element)
+      }
+    }
+  }, [cateChan, setChannelName, setUrl])
 
   return (
     <List
@@ -90,6 +121,18 @@ const ChannelsCate = (props: { cateChan: Map<any, any>, setUrl: any, setChannelN
       <Collapse in={openScience} timeout="auto" unmountOnExit>
         {ScienceChan}
       </Collapse>
+
+      <ListItemButton onClick={() => setOpenAnimation(!openAnimation)}>
+        <ListItemIcon>
+          <PetsIcon />
+        </ListItemIcon>
+        <ListItemText primary="Animation" />
+        {openAnimation ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={openAnimation} timeout="auto" unmountOnExit>
+        {AnimationChan}
+      </Collapse>
+
       <ListItemButton onClick={() => setOpenXXX(!openXXX)}>
         <ListItemIcon>
           <DoDisturbAltIcon />
