@@ -14,8 +14,8 @@ import ExpandMore from '@mui/icons-material/ExpandMore'
 import StarBorder from '@mui/icons-material/StarBorder'
 import { Channel } from '../pages/HomePage'
 
-const ChannelsCate = (props: { cateChan: Map<any, any>, setUrl: any }) => {
-  const { cateChan, setUrl } = props
+const ChannelsCate = (props: { cateChan: Map<any, any>, setUrl: any, setChannelName: any }) => {
+  const { cateChan, setUrl, setChannelName } = props
   console.log(cateChan)
   const [openXXX, setOpenXXX] = useState<boolean>(false)
   const [openScience, setOpenScience] = useState<boolean>(false)
@@ -31,6 +31,7 @@ const ChannelsCate = (props: { cateChan: Map<any, any>, setUrl: any }) => {
             <List component="div" disablePadding>
               <ListItemButton sx={{ pl: 4 }} onClick={() => {
                 setUrl(item.url)
+                setChannelName(item.name)
               }}>
                 <ListItemIcon>
                   <StarBorder />
@@ -52,6 +53,7 @@ const ChannelsCate = (props: { cateChan: Map<any, any>, setUrl: any }) => {
             <List component="div" disablePadding>
               <ListItemButton sx={{ pl: 4 }} onClick={() => {
                 setUrl(item.url)
+                setChannelName(item.name)
               }}>
                 <ListItemIcon>
                   <StarBorder />

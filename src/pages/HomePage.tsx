@@ -1,6 +1,6 @@
 import Player, { SourceProps } from '../components/Player'
 import { useEffect, useState } from 'react'
-import { Box, Button, Container, CssBaseline, Radio } from '@mui/material'
+import { Box, Button, Container, CssBaseline, Radio, Typography } from '@mui/material'
 import { getChannels } from '../api/channels'
 import { AxiosResponse } from 'axios'
 import ChannelsCate from '../components/ChannelsCate'
@@ -23,6 +23,7 @@ const HomePage = () => {
   const [url, setUrl] = useState<string | string[] | SourceProps[] | MediaStream>(
     'https://amc-ifc-films-picks-1.imdbtv.wurl.com/manifest/playlist.m3u8'
   )
+  const [channelName, setChannelName] = useState<string>('Film')
   const [categories, setCategories] = useState<string[]>([''])
   const [cateChan, setCateChan] = useState<Map<any, any>>(new Map())
   const [langChan, setLangChan] = useState<Map<any, any>>(new Map())
@@ -65,18 +66,23 @@ const HomePage = () => {
   return (
     <>
       <CssBaseline />
+
       <Container
         maxWidth="lg"
         sx={{
           height: '360px',
+          mt: '5px',
           display: 'flex',
           alignContent: 'center',
           alignItems: 'center',
           flexDirection: 'column'
         }}
       >
+        <Typography variant="h5" gutterBottom component="div">
+          {channelName}
+        </Typography>
         <Player url={url} />
-        <ChannelsCate cateChan={cateChan} setUrl={setUrl}/>
+        <ChannelsCate cateChan={cateChan} setUrl={setUrl} setChannelName={setChannelName} />
       </Container>
     </>
   )
