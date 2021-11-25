@@ -1,15 +1,22 @@
-import { useEffect, useState, ReactElement } from 'react'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemText from '@mui/material/ListItemText'
+import { useState } from 'react'
 import { FixedSizeList, ListChildComponentProps } from 'react-window'
-import { Avatar, Button, Drawer, ListItemAvatar, Container, ListItem, Box } from '@mui/material'
+import {
+  Avatar,
+  Button,
+  Drawer,
+  ListItemAvatar,
+  Container,
+  ListItem,
+  Box,
+  ListItemButton,
+  ListItemText
+} from '@mui/material'
 import { Channel } from '../pages/HomePage'
 
 const renderRow = (props: ListChildComponentProps) => {
   const { index, style, data } = props
   const { listData, setUrl, setChannelName } = data
   let item: Channel = listData[index]
-
   const handleChannelItemClick = () => {
     setUrl(item.url)
     setChannelName(item.name)
