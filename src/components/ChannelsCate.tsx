@@ -14,6 +14,40 @@ import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 import StarBorder from '@mui/icons-material/StarBorder'
 import { Channel } from '../pages/HomePage'
+import { Avatar, Button, Drawer, ListItemAvatar, Container } from '@mui/material'
+
+const ChannelCateCard = () => {
+  const [open, setOpen] = useState<boolean>(false)
+
+  return (
+    <>
+      <Button
+        variant="outlined"
+        onClick={() => setOpen(true)}
+      >
+        Music
+      </Button>
+      <Drawer
+        anchor="bottom"
+        open={open}
+        onClose={() => setOpen(false)}
+      >
+        <Container
+          maxWidth="lg"
+          sx={{
+            height: '50vh',
+            display: 'flex',
+            alignContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column'
+          }}
+        >
+          drawer
+        </Container>
+      </Drawer>
+    </>
+  )
+}
 
 const ChannelsCate = (props: { cateChan: Map<any, any>, setUrl: any, setChannelName: any }) => {
   const { cateChan, setUrl, setChannelName } = props
@@ -26,7 +60,7 @@ const ChannelsCate = (props: { cateChan: Map<any, any>, setUrl: any, setChannelN
   const [AnimationChan, setAnimationChan] = useState<ReactElement>(<></>)
   const [XXXChan, setXXXChan] = useState<ReactElement>(<></>)
 
-  useEffect(() => {
+  const setChanElement = () => {
     if (cateChan.get('Science')) {
       const channels = cateChan.get('Science').slice(0, 1000)
       if (channels) {
@@ -39,10 +73,26 @@ const ChannelsCate = (props: { cateChan: Map<any, any>, setUrl: any, setChannelN
                 setOpenAnimation(false)
                 setOpenXXX(false)
               }}>
-                <ListItemIcon>
-                  <StarBorder />
-                </ListItemIcon>
-                <ListItemText primary={item.name} />
+                <ListItemAvatar>
+                  {
+                    item.logo === null ?
+                      <Avatar
+                        alt={item.name ?? ''}
+                        variant="square"
+                        sx={{ width: 56, height: 21 }}
+                      >
+                        {item.name?.slice(0, 1)}
+                      </Avatar>
+                      :
+                      <Avatar
+                        alt={item.name ?? ''}
+                        variant="square"
+                        sx={{ width: 56, height: 21 }}
+                        src={item.logo}
+                      />
+                  }
+                </ListItemAvatar>
+                <ListItemText primary={item.name} sx={{ ml: '5px' }} />
               </ListItemButton>
             </List>
           )
@@ -98,52 +148,16 @@ const ChannelsCate = (props: { cateChan: Map<any, any>, setUrl: any, setChannelN
         setXXXChan(element)
       }
     }
+  }
+
+  useEffect(() => {
+    setChanElement()
   }, [cateChan, setChannelName, setUrl])
 
   return (
-    <List
-      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', }}
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-      subheader={
-        <ListSubheader component="div" id="nested-list-subheader">
-          Channels Group By Categories
-        </ListSubheader>
-      }
-    >
-      <ListItemButton onClick={() => setOpenScience(!openScience)}>
-        <ListItemIcon>
-          <ScienceIcon />
-        </ListItemIcon>
-        <ListItemText primary="Science" />
-        {openScience ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={openScience} timeout="auto" unmountOnExit>
-        {ScienceChan}
-      </Collapse>
-
-      <ListItemButton onClick={() => setOpenAnimation(!openAnimation)}>
-        <ListItemIcon>
-          <PetsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Animation" />
-        {openAnimation ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={openAnimation} timeout="auto" unmountOnExit>
-        {AnimationChan}
-      </Collapse>
-
-      <ListItemButton onClick={() => setOpenXXX(!openXXX)}>
-        <ListItemIcon>
-          <DoDisturbAltIcon />
-        </ListItemIcon>
-        <ListItemText primary="XXX" />
-        {openXXX ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={openXXX} timeout="auto" unmountOnExit>
-        {XXXChan}
-      </Collapse>
-    </List>
+    <>
+      <ChannelCateCard />
+    </>
   )
 }
 

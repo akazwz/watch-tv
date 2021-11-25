@@ -21,9 +21,9 @@ export type Channel = {
 
 const HomePage = () => {
   const [url, setUrl] = useState<string | string[] | SourceProps[] | MediaStream>(
-    'https://amc-ifc-films-picks-1.imdbtv.wurl.com/manifest/playlist.m3u8'
+    'http://1hdru-hls-otcnet.cdnvideo.ru/onehdmusic/tracks-v1a1/index.m3u8'
   )
-  const [channelName, setChannelName] = useState<string>('Film')
+  const [channelName, setChannelName] = useState<string>('1HD Music Television')
   const [categories, setCategories] = useState<string[]>([''])
   const [cateChan, setCateChan] = useState<Map<any, any>>(new Map())
   const [langChan, setLangChan] = useState<Map<any, any>>(new Map())
