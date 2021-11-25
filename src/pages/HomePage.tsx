@@ -66,7 +66,6 @@ const HomePage = () => {
   return (
     <>
       <CssBaseline />
-
       <Container
         maxWidth="lg"
         sx={{
@@ -82,7 +81,12 @@ const HomePage = () => {
           {channelName}
         </Typography>
         <Player url={url} />
-        <ChannelsCate cateChan={cateChan} setUrl={setUrl} setChannelName={setChannelName} />
+        <ChannelsCate
+          cateChan={cateChan}
+          categories={categories}
+          setUrl={setUrl}
+          setChannelName={setChannelName}
+        />
       </Container>
     </>
   )
