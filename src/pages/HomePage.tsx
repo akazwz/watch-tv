@@ -1,8 +1,8 @@
-import Player, { SourceProps } from '../components/Player'
 import { useEffect, useState } from 'react'
-import { Box, Button, Container, CssBaseline, Radio, Typography } from '@mui/material'
-import { getChannels } from '../api/channels'
 import { AxiosResponse } from 'axios'
+import { Container, CssBaseline, Typography } from '@mui/material'
+import { getChannels } from '../api/channels'
+import Player, { SourceProps } from '../components/Player'
 import ChannelsCate from '../components/ChannelsCate'
 
 export type Channel = {
@@ -25,6 +25,7 @@ const HomePage = () => {
   )
   const [channelName, setChannelName] = useState<string>('1HD Music Television')
   const [categories, setCategories] = useState<string[]>([''])
+  const [languages, setLanguages] = useState<string[]>([''])
   const [cateChan, setCateChan] = useState<Map<any, any>>(new Map())
   const [langChan, setLangChan] = useState<Map<any, any>>(new Map())
 
@@ -46,7 +47,7 @@ const HomePage = () => {
         let channel: Channel = channels[i]
         let cate = channel.category
         if (!cate) {
-          cate = 'none'
+          cate = 'None'
         }
 
         const isContained = categoriesM.has(cate)
