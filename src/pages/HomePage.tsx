@@ -50,6 +50,7 @@ const HomePage = () => {
         let langArr = channel.languages
         for (let j = 0; j < langArr.length; j++) {
           let lang = langArr[j]
+          const isLangContained = languagesM.has(lang)
         }
 
         if (!cate) {
