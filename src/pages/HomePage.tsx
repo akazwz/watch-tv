@@ -42,10 +42,16 @@ const HomePage = () => {
       })
 
       let categoriesM = new Map()
+      let languagesM = new Map()
 
       for (let i = 0; i < channels.length; i++) {
         let channel: Channel = channels[i]
         let cate = channel.category
+        let langArr = channel.languages
+        for (let j = 0; j < langArr.length; j++) {
+          let lang = langArr[j]
+        }
+
         if (!cate) {
           cate = 'None'
         }
