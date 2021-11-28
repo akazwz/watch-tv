@@ -49,10 +49,9 @@ const HomePage = () => {
         let channel: Channel = channels[i]
         let cate = channel.category
         let langArr = channel.languages
-        console.log(langArr)
         for (let j = 0; j < langArr.length; j++) {
           let lang = langArr[j]
-          const isLangContained = languagesM.has(lang)
+          const isLangContained = languagesM.has(lang.name)
           if (!isLangContained) {
             languagesM.set(lang.name, [channel])
           } else {
