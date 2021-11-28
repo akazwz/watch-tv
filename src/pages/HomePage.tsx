@@ -1,4 +1,4 @@
-import { useEffect, useState,MouseEvent } from 'react'
+import { useEffect, useState, MouseEvent } from 'react'
 import { AxiosResponse } from 'axios'
 import { Container, CssBaseline, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 import { getChannels } from '../api/channels'
@@ -21,14 +21,17 @@ export type Channel = {
 
 const HomePage = () => {
   const [url, setUrl] = useState<string | string[] | SourceProps[] | MediaStream>(
-    'http://1hdru-hls-otcnet.cdnvideo.ru/onehdmusic/tracks-v1a1/index.m3u8'
+    'https://ott-linear-channels.stingray.com/v1/manifest/734895816ccb1e836f8c1e81f772244d9be0077c/128/b058ef41-e048-4d2b-b511-c4f2004d5698/0.m3u8'
   )
-  const [channelName, setChannelName] = useState<string>('1HD Music Television')
+  const [channelName, setChannelName] = useState<string>('412 Stingray Everything 80s')
   const [categories, setCategories] = useState<string[]>([''])
   const [languages, setLanguages] = useState<string[]>([''])
   const [alignment, setAlignment] = useState<string>('cate')
   const [cateChan, setCateChan] = useState<Map<any, any>>(new Map())
   const [langChan, setLangChan] = useState<Map<any, any>>(new Map())
+
+  const [choices, setChoices] = useState<string[]>([''])
+  const [channels, setChannels] = useState<Map<any, any>>(new Map())
 
   useEffect(() => {
     let initCategories: string[] = []
@@ -79,11 +82,23 @@ const HomePage = () => {
       initLanguages = Array.from(languagesM.keys())
       setCategories(initCategories)
       setLanguages(initLanguages)
+      setChoices(initCategories)
+      setChannels(categoriesM)
     })
   }, [])
 
-  const handleToggleButtonGroupChange = ( event: MouseEvent<HTMLElement>, newAlignment: string,) => {
+  const handleToggleButtonGroupChange = (event: MouseEvent<HTMLElement>, newAlignment: string,) => {
     setAlignment(newAlignment)
+    switch (newAlignment) {
+      case 'cate':
+        setChoices(categories)
+        setChannels(cateChan)
+        return
+      case 'lang':
+        setChoices(languages)
+        setChannels(langChan)
+        return
+    }
   }
 
   return (
@@ -114,10 +129,8 @@ const HomePage = () => {
           <ToggleButton value="lang">Languages</ToggleButton>
         </ToggleButtonGroup>
         <ChannelsCate
-          cateChan={cateChan}
-          categories={categories}
-          langChan={langChan}
-          languages={languages}
+          choices={choices}
+          channels={channels}
           setUrl={setUrl}
           setChannelName={setChannelName}
         />
