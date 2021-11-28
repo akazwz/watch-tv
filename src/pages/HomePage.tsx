@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState,MouseEvent } from 'react'
 import { AxiosResponse } from 'axios'
-import { Container, CssBaseline, Typography } from '@mui/material'
+import { Container, CssBaseline, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 import { getChannels } from '../api/channels'
 import Player, { SourceProps } from '../components/Player'
 import ChannelsCate from '../components/ChannelsCate'
@@ -26,6 +26,7 @@ const HomePage = () => {
   const [channelName, setChannelName] = useState<string>('1HD Music Television')
   const [categories, setCategories] = useState<string[]>([''])
   const [languages, setLanguages] = useState<string[]>([''])
+  const [alignment, setAlignment] = useState<string>('cate')
   const [cateChan, setCateChan] = useState<Map<any, any>>(new Map())
   const [langChan, setLangChan] = useState<Map<any, any>>(new Map())
 
@@ -81,6 +82,10 @@ const HomePage = () => {
     })
   }, [])
 
+  const handleToggleButtonGroupChange = ( event: MouseEvent<HTMLElement>, newAlignment: string,) => {
+    setAlignment(newAlignment)
+  }
+
   return (
     <>
       <CssBaseline />
@@ -99,6 +104,15 @@ const HomePage = () => {
           {channelName}
         </Typography>
         <Player url={url} />
+        <ToggleButtonGroup
+          color="primary"
+          value={alignment}
+          exclusive
+          onChange={handleToggleButtonGroupChange}
+        >
+          <ToggleButton value="cate">Categories</ToggleButton>
+          <ToggleButton value="lang">Languages</ToggleButton>
+        </ToggleButtonGroup>
         <ChannelsCate
           cateChan={cateChan}
           categories={categories}
