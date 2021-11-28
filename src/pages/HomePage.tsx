@@ -31,6 +31,7 @@ const HomePage = () => {
 
   useEffect(() => {
     let initCategories: string[] = []
+    let initLanguages: string[] = []
     getChannels().then((res: AxiosResponse) => {
       if (res.status !== 200) {
         alert('error')
@@ -48,9 +49,15 @@ const HomePage = () => {
         let channel: Channel = channels[i]
         let cate = channel.category
         let langArr = channel.languages
+        console.log(langArr)
         for (let j = 0; j < langArr.length; j++) {
           let lang = langArr[j]
           const isLangContained = languagesM.has(lang)
+          if (!isLangContained) {
+            languagesM.set(lang.name, [channel])
+          } else {
+            languagesM.set(lang.name, [...languagesM.get(lang.name), channel])
+          }
         }
 
         if (!cate) {
@@ -65,9 +72,13 @@ const HomePage = () => {
           categoriesM.set(cate, [...categoriesM.get(cate), channel])
         }
       }
+
       setCateChan(categoriesM)
+      setLangChan(languagesM)
       initCategories = Array.from(categoriesM.keys())
+      initLanguages = Array.from(languagesM.keys())
       setCategories(initCategories)
+      setLanguages(initLanguages)
     })
   }, [])
 
@@ -92,6 +103,8 @@ const HomePage = () => {
         <ChannelsCate
           cateChan={cateChan}
           categories={categories}
+          langChan={langChan}
+          languages={languages}
           setUrl={setUrl}
           setChannelName={setChannelName}
         />

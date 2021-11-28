@@ -77,22 +77,22 @@ const ChannelListV = (props: { listData: any, setUrl: any, setChannelName: any, 
   )
 }
 
-const ChannelsCate = (props: { cateChan: Map<any, any>, categories: string[], setUrl: any, setChannelName: any }) => {
-  const { cateChan, categories, setUrl, setChannelName } = props
+const ChannelsCate = (props: { cateChan: Map<any, any>, categories: string[], langChan: Map<any, any>, languages: string[], setUrl: any, setChannelName: any }) => {
+  const { cateChan, categories, langChan, languages, setUrl, setChannelName } = props
   const [open, setOpen] = useState<boolean>(false)
   const [channelListData, setChannelListData] = useState<any>([])
 
   return (
     <>
       <Box sx={{ mt: '10px' }}>
-        {categories.map((item, index) => {
+        {languages.map((item, index) => {
           return (
             <Button
               key={index}
               variant="outlined"
               onClick={() => {
                 setOpen(true)
-                const cateChanData = cateChan.get(item)
+                const cateChanData = langChan.get(item)
                 setChannelListData(cateChanData)
               }}
               sx={{
