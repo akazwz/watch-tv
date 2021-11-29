@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios'
 import { Container, CssBaseline, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 import { getChannels } from '../api/channels'
 import Player, { SourceProps } from '../components/Player'
-import ChannelsCate from '../components/ChannelsCate'
+import Channels from '../components/Channels'
 
 export type Channel = {
   category: string | null
@@ -128,7 +128,7 @@ const HomePage = () => {
           <ToggleButton value="cate">Categories</ToggleButton>
           <ToggleButton value="lang">Languages</ToggleButton>
         </ToggleButtonGroup>
-        <ChannelsCate
+        <Channels
           choices={choices}
           channels={channels}
           setUrl={setUrl}

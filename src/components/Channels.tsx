@@ -11,6 +11,7 @@ import {
   ListItemButton,
   ListItemText
 } from '@mui/material'
+import ReactCountryFlag from 'react-country-flag'
 import { Channel } from '../pages/HomePage'
 
 const renderRow = (props: ListChildComponentProps) => {
@@ -49,7 +50,17 @@ const renderRow = (props: ListChildComponentProps) => {
           secondary={
             <div>
               {item.languages.map((item) => {
-                return item.name
+                return item.name.concat(' ')
+              })}
+              {item.countries.map((item) => {
+                return (
+                  <ReactCountryFlag
+                    countryCode={item.code}
+                    svg
+                    cdnUrl="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.3/flags/1x1/"
+                    cdnSuffix="svg"
+                  />
+                )
               })}
             </div>
           }
@@ -77,7 +88,7 @@ const ChannelListV = (props: { listData: any, setUrl: any, setChannelName: any, 
   )
 }
 
-const ChannelsCate = (props: { channels: Map<any, any>, choices: string[], setUrl: any, setChannelName: any }) => {
+const Channels = (props: { channels: Map<any, any>, choices: string[], setUrl: any, setChannelName: any }) => {
   const { channels, choices, setUrl, setChannelName } = props
   const [open, setOpen] = useState<boolean>(false)
   const [channelListData, setChannelListData] = useState<any>([])
@@ -126,4 +137,4 @@ const ChannelsCate = (props: { channels: Map<any, any>, choices: string[], setUr
   )
 }
 
-export default ChannelsCate
+export default Channels
