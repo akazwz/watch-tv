@@ -9,7 +9,7 @@ import {
   ListItem,
   Box,
   ListItemButton,
-  ListItemText
+  ListItemText, Popover, Tooltip
 } from '@mui/material'
 import ReactCountryFlag from 'react-country-flag'
 import { Channel } from '../pages/HomePage'
@@ -53,9 +53,13 @@ const renderRow = (props: ListChildComponentProps) => {
                 return item.name.concat(' ')
               })}
               {item.countries.map((item) => {
+                let code = item.code
+                if (code === 'uk') {
+                  code = 'gb'
+                }
                 return (
                   <ReactCountryFlag
-                    countryCode={item.code}
+                    countryCode={code}
                     svg
                     cdnUrl="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.3/flags/1x1/"
                     cdnSuffix="svg"
