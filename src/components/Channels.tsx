@@ -9,7 +9,7 @@ import {
   ListItem,
   Box,
   ListItemButton,
-  ListItemText, Popover, Tooltip
+  ListItemText,
 } from '@mui/material'
 import ReactCountryFlag from 'react-country-flag'
 import { Channel } from '../pages/HomePage'

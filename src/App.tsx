@@ -2,10 +2,12 @@ import React, { Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import {
   Backdrop,
-  CircularProgress, CssBaseline, ThemeProvider,
+  CircularProgress,
+  CssBaseline,
+  ThemeProvider,
+  createTheme,
 } from '@mui/material'
 import { useTheme } from './hooks/redux'
-import { createTheme } from '@mui/material'
 import HomePage from './pages/HomePage'
 import NotFound from './pages/NotFound'
 
