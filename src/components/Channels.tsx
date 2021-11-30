@@ -81,7 +81,7 @@ const ChannelListV = (props: { listData: any, setUrl: any, setChannelName: any, 
   return (
     <>
       <FixedSizeList
-        itemSize={80}
+        itemSize={100}
         itemCount={listData.length}
         height={400}
         width={400}

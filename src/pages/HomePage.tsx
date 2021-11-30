@@ -21,14 +21,16 @@ export type Channel = {
 
 const HomePage = () => {
   const [url, setUrl] = useState<string | string[] | SourceProps[] | MediaStream>(
-    'https://ott-linear-channels.stingray.com/v1/manifest/734895816ccb1e836f8c1e81f772244d9be0077c/128/b058ef41-e048-4d2b-b511-c4f2004d5698/0.m3u8'
+    'https://livestreamdirect-breezetv.mediaworks.nz/breezetv_3.m3u8'
   )
-  const [channelName, setChannelName] = useState<string>('412 Stingray Everything 80s')
+  const [channelName, setChannelName] = useState<string>('Breeze TV')
   const [categories, setCategories] = useState<string[]>([''])
   const [languages, setLanguages] = useState<string[]>([''])
+  const [countries, setCountries] = useState<string[]>([''])
   const [alignment, setAlignment] = useState<string>('cate')
   const [cateChan, setCateChan] = useState<Map<any, any>>(new Map())
   const [langChan, setLangChan] = useState<Map<any, any>>(new Map())
+  const [countryChan, setCountryChan] = useState<Map<any, any>>(new Map())
 
   const [choices, setChoices] = useState<string[]>([''])
   const [channels, setChannels] = useState<Map<any, any>>(new Map())
@@ -36,6 +38,7 @@ const HomePage = () => {
   useEffect(() => {
     let initCategories: string[] = []
     let initLanguages: string[] = []
+    let initCountries: string[] = []
     getChannels().then((res: AxiosResponse) => {
       if (res.status !== 200) {
         alert('error')
@@ -48,11 +51,15 @@ const HomePage = () => {
 
       let categoriesM = new Map()
       let languagesM = new Map()
+      let countriesM = new Map()
 
       for (let i = 0; i < channels.length; i++) {
         let channel: Channel = channels[i]
         let cate = channel.category
         let langArr = channel.languages
+        let countriesArr = channel.countries
+
+        // languages
         for (let j = 0; j < langArr.length; j++) {
           let lang = langArr[j]
           const isLangContained = languagesM.has(lang.name)
@@ -63,6 +70,18 @@ const HomePage = () => {
           }
         }
 
+        // countries
+        for (let j = 0; j < countriesArr.length; j++) {
+          let country = countriesArr[j]
+          const isCountryContained = countriesM.has(country.name)
+          if (!isCountryContained) {
+            countriesM.set(country.name, [channel])
+          } else {
+            countriesM.set(country.name, [...countriesM.get(country.name), channel])
+          }
+        }
+
+        // categories
         if (!cate) {
           cate = 'None'
         }
@@ -78,10 +97,14 @@ const HomePage = () => {
 
       setCateChan(categoriesM)
       setLangChan(languagesM)
+      setCountryChan(countriesM)
       initCategories = Array.from(categoriesM.keys())
       initLanguages = Array.from(languagesM.keys())
+      initCountries = Array.from(countriesM.keys())
       setCategories(initCategories)
       setLanguages(initLanguages)
+      setCountries(initCountries)
+
       setChoices(initCategories)
       setChannels(categoriesM)
     })
@@ -97,6 +120,10 @@ const HomePage = () => {
       case 'lang':
         setChoices(languages)
         setChannels(langChan)
+        return
+      case 'countries':
+        setChoices(countries)
+        setChannels(countryChan)
         return
     }
   }
@@ -127,6 +154,7 @@ const HomePage = () => {
         >
           <ToggleButton value="cate">Categories</ToggleButton>
           <ToggleButton value="lang">Languages</ToggleButton>
+          <ToggleButton value="countries">Countries</ToggleButton>
         </ToggleButtonGroup>
         <Channels
           choices={choices}
