@@ -1,5 +1,5 @@
-import notFound from '../resources/404.svg'
 import { Box, Container } from '@mui/material'
+import notFound from '../resources/404.svg'
 
 const NotFound = () => {
   return (
